@@ -14,12 +14,9 @@ function App() {
         <div className="app">
             <Header />
             <Hero />
-            {/* <HealthyLifestyle /> */}
             <YogaSessions />
-            {/* <FitnessGoals /> */}
             <AboutUs />
             <Footer />
-            {/* <Institute /> */}
         </div>
     );
 }
