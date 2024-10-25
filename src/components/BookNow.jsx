@@ -31,7 +31,7 @@ const BookNow = () => {
       }
     });
   };
-
+console.log(serviceId);
   return (
     <div className="book-now-container">
       <h2>Book Your Session</h2>

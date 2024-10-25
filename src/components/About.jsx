@@ -5,7 +5,7 @@ function About() {
   return (
     <section className="py-20 px-6 md:px-12 lg:px-24 bg-[#f9f7fc]" id="about">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">About Yoga Soul</h2>
+        <h2 className="text-4xl font-bold text-center mb-8">About Us</h2>
 
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
@@ -16,7 +16,7 @@ function About() {
             />
           </div>
           <div className="md:w-1/2">
-            <p className="text-lg mb-6 text-[#707070]">
+            <p className="text-lg mb-6 text-[#707070] text-center md:text-left">
               At Yoga Soul, we believe in the transformative power of yoga to nurture both body and mind. Our studio is a sanctuary where individuals of all levels can explore the ancient practice of yoga in a modern, welcoming environment.
             </p>
             {/* <p className="text-lg mb-6 text-[#707070]">
@@ -25,7 +25,7 @@ function About() {
             <p className="text-lg mb-6 text-[#707070]">
               We're committed to creating a supportive, inclusive community where everyone feels welcome and inspired to grow. Join us and discover the profound benefits of yoga for yourself.
             </p> */}
-            <button className="bg-[#745982] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#db2a59] transition duration-300">
+            <button className="bg-[#745982] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#db2a59] transition duration-300 mx-auto block sm:inline-block">
               Learn More About Us
             </button>
           </div>

@@ -7,48 +7,50 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "Yoga Enthusiast",
     content: "Aum Yoga has transformed my life. The instructors are amazing and the atmosphere is so peaceful.",
-    image: "/sarah-johnson.jpg"
+    image: "https://via.placeholder.com/150" // Dummy image URL
   },
   {
     id: 2,
     name: "Michael Chen",
     role: "Fitness Trainer",
     content: "I've been to many yoga studios, but Aum Yoga stands out. Their classes are challenging yet accessible.",
-    image: "/michael-chen.jpg"
+    image: "https://via.placeholder.com/150" // Dummy image URL
   },
   {
     id: 3,
     name: "Emily Rodriguez",
     role: "Stress Management Coach",
     content: "The mindfulness techniques I've learned at Aum Yoga have been invaluable in my personal and professional life.",
-    image: "/emily-rodriguez.jpg"
+    image: "https://via.placeholder.com/150" // Dummy image URL
   },
   {
     id: 4,
     name: "David Thompson",
     role: "Corporate Executive",
     content: "Aum Yoga's corporate wellness program has significantly improved our team's productivity and morale.",
-    image: "/david-thompson.jpg"
+    image: "https://via.placeholder.com/150" // Dummy image URL
   },
   {
     id: 5,
     name: "Lisa Patel",
     role: "Yoga Instructor",
     content: "Teaching at Aum Yoga has been a dream. The community here is supportive and truly dedicated to growth.",
-    image: "/lisa-patel.jpg"
+    image: "https://via.placeholder.com/150" // Dummy image URL
   }
 ];
 
 const TestimonialCard = ({ name, role, content, image }) => (
   <motion.div
-    className="bg-white rounded-lg shadow-lg p-6 mx-4 my-8 w-80 flex flex-col items-center"
+    className="bg-[#745982] rounded-lg shadow-lg p-8 mx-4 my-8 w-80 flex flex-col items-center"
     whileHover={{ scale: 1.05 }}
     transition={{ type: "spring", stiffness: 300 }}
   >
-    <img src={image} alt={name} className="w-24 h-24 rounded-full mb-4 object-cover" />
-    <h3 className="text-xl font-semibold text-[#745982] mb-2">{name}</h3>
-    <p className="text-sm text-gray-600 mb-4">{role}</p>
-    <p className="text-gray-800 text-center">{content}</p>
+    <img src={image} alt={name} className="w-24 h-24 rounded-full mb-6 object-cover" />
+    <h3 className="text-xl font-bold text-white mb-3 text-center">{name}</h3>
+    <p className="text-sm text-yellow-300 mb-4 text-center font-semibold">{role}</p>
+    <p className="text-gray-200 text-center whitespace-normal break-words line-clamp-4">
+      {content}
+    </p>
   </motion.div>
 );
 
@@ -80,7 +82,7 @@ const Testimonials = () => {
         transition={{ duration: 0.8 }}
         className="container mx-auto text-center mb-12"
       >
-        <h1 className="text-4xl font-bold text-[#745982] mb-4">What Our Students Say</h1>
+        <h2 className="text-4xl font-bold text-center mb-8">What Our Students Say</h2>
         <p className="text-xl text-gray-600">Discover the transformative power of Aum Yoga through our community's experiences.</p>
       </motion.div>
 

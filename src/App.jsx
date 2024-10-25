@@ -10,6 +10,7 @@ import Testimonials from './components/Testimonials';
 import BookNow from './components/BookNow';
 import Payment from './components/Payment';
 import './App.css';
+import KnowMore from './components/KnowMore';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           } />
           <Route path="/book/:serviceId" element={<BookNow />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/knowmore/:serviceId" element={<KnowMore />} />
         </Routes>
       </div>
     </Router>
