@@ -1,11 +1,12 @@
 import React from 'react';
 // import aboutUsImage from '../assets/about-us-image.jpg';
 import meditate from '../assets/meditate.jpg';
-function AboutUs() {
+function About() {
   return (
-    <section className="py-20 px-6 md:px-12 lg:px-24 bg-[#f9f7fc]">
+    <section className="py-20 px-6 md:px-12 lg:px-24 bg-[#f9f7fc]" id="about">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">About Yoga Soul</h2>
+
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
             <img
@@ -34,4 +35,4 @@ function AboutUs() {
   );
 }
 
-export default AboutUs;
+export default About;

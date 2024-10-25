@@ -30,9 +30,9 @@ const sessions = [
   },
 ];
 
-function YogaSessions() {
+function Services() {
   return (
-    <section className="py-20 px-6 md:px-12 lg:px-24 bg-[#f9f7fc]">
+    <section className="py-20 px-6 md:px-12 lg:px-24 bg-[#f9f7fc]" id="services">
       <h2 className="text-4xl font-bold text-center mb-4">Our Yoga Session</h2>
       <p className="text-center mb-12 max-w-3xl mx-auto text-[#707070]">
         The benefits of a regular yoga practice are wide-ranging. Here are our three regular sessions of yoga. Our sessions are organized with both kids and senior.
@@ -63,4 +63,4 @@ function YogaSessions() {
   );
 }
 
-export default YogaSessions;
+export default Services;

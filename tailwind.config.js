@@ -7,4 +7,9 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  // Add these base styles
+  corePlugins: {
+    preflight: true,
+  },
+  variants: {},
 }
