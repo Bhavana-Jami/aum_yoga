@@ -1,17 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import FitnessGoals from './components/FitnessGoals';
-import Services from './components/Services';
-import AboutUs from './components/About';
-import Footer from './components/Footer';
-import Testimonials from './components/Testimonials';
-import BookNow from './components/BookNow';
-import Payment from './components/Payment';
+import Header from './pages/Header';
+import Hero from './pages/Hero';
+import FitnessGoals from './pages/FitnessGoals';
+import Services from './pages/Services';
+import About from './pages/About';
+import Footer from './pages/Footer';
+import Testimonials from './pages/Testimonials';
+import BookNow from './pages/BookNow';
+import Payment from './pages/Payment';
 import './App.css';
-import KnowMore from './components/KnowMore';
-
+import KnowMore from './pages/KnowMore';
 function App() {
   return (
     <Router>
@@ -24,7 +23,7 @@ function App() {
               {/* <FitnessGoals /> */}
               <Services />
               <Testimonials />
-              <AboutUs />
+              <About />
               <Footer />
             </>
           } />

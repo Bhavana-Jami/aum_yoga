@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import LazyImage from '../components/LazyImage';
 
 const services = [
   {
@@ -88,9 +89,9 @@ const KnowMorePage = () => {
               transition={{ type: "spring", stiffness: 300 }}
               onClick={() => setSelectedService(service)}
               {...fadeIn}
-              transition={{ delay: index * 0.1 }}
+              // transition={{ delay: index * 0.1 }}
             >
-              <img src={service.image} alt={service.name} className="w-full h-48 object-cover rounded-md mb-4" />
+              <LazyImage src={service.image} alt={service.name} className="w-full h-48 object-cover rounded-md mb-4" />
               <h2 className="text-2xl font-semibold text-[#745982] mb-2">{service.name}</h2>
               <p className="text-gray-600 mb-4">{service.description.substring(0, 100)}...</p>
               <button className="text-[#ffcc3f] hover:text-[#db2a59] font-semibold transition duration-300">
@@ -124,7 +125,7 @@ const KnowMorePage = () => {
                 </button>
                 <div className="flex flex-col md:flex-row gap-8">
                   <div className="md:w-1/2">
-                    <img src={selectedService.image} alt={selectedService.name} className="w-full h-64 object-cover rounded-md mb-4" />
+                    <LazyImage src={selectedService.image} alt={selectedService.name} className="w-full h-64 object-cover rounded-md mb-4" />
                   </div>
                   <div className="md:w-1/2">
                     <h2 className="text-3xl font-bold text-[#745982] mb-4">{selectedService.name}</h2>

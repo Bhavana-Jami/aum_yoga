@@ -121,7 +121,7 @@ function Services() {
           className="text-4xl font-bold  mb-8 text-center"
           {...fadeIn}
         >
-           <h2 className="text-4xl font-bold text-center mb-8">Our Services</h2>
+           Our Services
         </motion.h1>
 
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import heroBackground from "../assets/hero-background.png";
+import LazyImage from "../components/LazyImage";
 
 function Hero() {
   return (
@@ -9,8 +10,12 @@ function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           src={heroBackground}
-          alt=""
+          alt="Main Hero Image"
           className="w-full h-full object-cover object-[right]"
+          loading="eager"
+          placeholder="blur"
+          fetchpriority="high" c
+          
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 to-black/75"></div>
       </div>
@@ -22,7 +27,7 @@ function Hero() {
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold mb-6 text-[#b187c6]">
             With Yoga Lifestyle.
           </h2>
-          <p className="mb-8 max-w-2xl text-sm sm:text-base md:text-lg">
+          <p className="mb-8 max-w-2xl text-sm sm:text-base md:text-lg contain-content">
             Slow movements and deep breathing increase blood flow and warm up
             muscles, while holding a pose can build strength. Balance on one foot,
             while holding the other foot to your calf at a right angle.

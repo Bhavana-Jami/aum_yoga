@@ -1,6 +1,7 @@
 import React from 'react';
 // import aboutUsImage from '../assets/about-us-image.jpg';
 import meditate from '../assets/meditate.jpg';
+import LazyImage from '../components/LazyImage';
 function About() {
   return (
     <section className="py-20 px-6 md:px-12 lg:px-24 bg-[#f9f7fc]" id="about">
@@ -9,7 +10,7 @@ function About() {
 
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
-            <img
+            <LazyImage
               src={meditate}
               alt="Yoga instructor teaching a class"
               className="rounded-lg shadow-lg w-full h-auto"
