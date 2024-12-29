@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import meditate from "../assets/meditate.jpg";
-import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
+import { AuthContext } from "../context/authContext";
 const services = [
   {
     id: "hatha",
@@ -100,33 +101,36 @@ const services = [
 function Services() {
   const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState(null);
-
+  const { authState } = useContext(AuthContext);
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
-    transition: { duration: 0.5 }
+    transition: { duration: 0.5 },
   };
-  const handleBookNow = (service) => {
-    navigate(`/book/${selectedService.id}`);
-    
-  }
+
+  const handleBookNow = (serviceId) => {
+    if (authState) {
+      navigate(`/book/${serviceId}`);
+    } else {
+      navigate("/signin");
+      // alert("hi")
+    }
+  };
+  const location = useLocation();
+  
   return (
     <section
       className="py-20 px-6 md:px-12 lg:px-24 bg-[#f9f7fc]"
       id="services"
     >
+      {location.pathname == "/services" && <Link to="/">Back to home</Link>}
       <div className="container mx-auto">
-        <motion.h1
-          className="text-4xl font-bold  mb-8 text-center"
-          {...fadeIn}
-        >
-           Our Services
+        <motion.h1 className="text-4xl font-bold  mb-8 text-center" {...fadeIn}>
+          Our Services
         </motion.h1>
-
-
       </div>
-    
+
       <p className="text-center mb-12 max-w-3xl mx-auto text-[#707070]">
         The benefits of a regular yoga practice are wide-ranging. Here are our
         three regular sessions of yoga. Our sessions are organized with both
@@ -149,12 +153,15 @@ function Services() {
                 {service.description.slice(0, 100)}...
               </p>
               <div className="flex justify-start gap-4">
-                <div className="bg-[#db2a59] text-white px-3 py-1 rounded-full text-sm cursor-pointer" onClick={() => setSelectedService(service)}>
+                <div
+                  className="bg-[#db2a59] text-white px-3 py-1 rounded-full text-sm cursor-pointer"
+                  onClick={() => setSelectedService(service)}
+                >
                   Know More
                 </div>
                 <div
                   className="bg-[#db2a59] text-white px-3 py-1 rounded-full text-sm cursor-pointer"
-                  onClick={() => navigate(`/book/${index}`)}
+                  onClick={() => handleBookNow(service.id)}
                 >
                   Book Now
                 </div>
@@ -165,51 +172,72 @@ function Services() {
       </div>
       {/* modal for selected service */}
       <AnimatePresence>
-          {selectedService && (
+        {selectedService && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="bg-white rounded-lg p-8 max-w-4xl w-full relative"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              <motion.div
-                className="bg-white rounded-lg p-8 max-w-4xl w-full relative"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 300 }}
+              <button
+                onClick={() => setSelectedService(null)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-[#db2a59] transition duration-300"
+                aria-label="Close modal"
               >
-                <button
-                  onClick={() => setSelectedService(null)}
-                  className="absolute top-4 right-4 text-gray-500 hover:text-[#db2a59] transition duration-300"
-                  aria-label="Close modal"
-                >
-                  <X size={24} />
-                </button>
-                <div className="flex flex-col md:flex-row gap-8">
-                  <div className="md:w-1/2">
-                    <img src={selectedService.image} alt={selectedService.name} className="w-full h-64 object-cover rounded-md mb-4" />
-                  </div>
-                  <div className="md:w-1/2">
-                    <h2 className="text-3xl font-bold text-[#745982] mb-4">{selectedService.name}</h2>
-                    <p className="text-gray-700 mb-4">{selectedService.description}</p>
-                    <h3 className="text-xl font-semibold text-[#745982] mb-2">Benefits:</h3>
-                    <ul className="list-disc list-inside mb-4">
-                      {selectedService.benefits.map((benefit, index) => (
-                        <li key={index} className="text-gray-700">{benefit}</li>
-                      ))}
-                    </ul>
-                    <p className="text-gray-700 mb-2"><span className="font-semibold">Suitable for:</span> {selectedService.suitableFor}</p>
-                    <p className="text-gray-700 mb-4"><span className="font-semibold">Duration:</span> {selectedService.duration}</p>
-                    <button className="bg-[#ffcc3f] text-[#745982] px-6 py-2 rounded-full hover:bg-[#db2a59] hover:text-white transition duration-300" onClick={()=>handleBookNow(service)}>
-                      Book Now
-                    </button>
-                  </div>
+                <X size={24} />
+              </button>
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/2">
+                  <img
+                    src={selectedService.image}
+                    alt={selectedService.name}
+                    className="w-full h-64 object-cover rounded-md mb-4"
+                  />
                 </div>
-              </motion.div>
+                <div className="md:w-1/2">
+                  <h2 className="text-3xl font-bold text-[#745982] mb-4">
+                    {selectedService.name}
+                  </h2>
+                  <p className="text-gray-700 mb-4">
+                    {selectedService.description}
+                  </p>
+                  <h3 className="text-xl font-semibold text-[#745982] mb-2">
+                    Benefits:
+                  </h3>
+                  <ul className="list-disc list-inside mb-4">
+                    {selectedService.benefits.map((benefit, index) => (
+                      <li key={index} className="text-gray-700">
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-gray-700 mb-2">
+                    <span className="font-semibold">Suitable for:</span>{" "}
+                    {selectedService.suitableFor}
+                  </p>
+                  <p className="text-gray-700 mb-4">
+                    <span className="font-semibold">Duration:</span>{" "}
+                    {selectedService.duration}
+                  </p>
+                  <button
+                    className="bg-[#ffcc3f] text-[#745982] px-6 py-2 rounded-full hover:bg-[#db2a59] hover:text-white transition duration-300"
+                    onClick={() => handleBookNow(service)}
+                  >
+                    Book Now
+                  </button>
+                </div>
+              </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

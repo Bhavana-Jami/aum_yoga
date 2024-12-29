@@ -15,4 +15,7 @@ export default defineConfig({
       'Cache-Control': 'public, max-age=31536000',
     },
   },
+  define: {
+    "process.env": {},
+  },
 })

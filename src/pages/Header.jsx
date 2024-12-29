@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useState, useContext } from "react";
+import { Menu, X, LogOut } from "lucide-react";
+import { useAuth } from "../context/authContext";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -7,15 +9,17 @@ function Header() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+  const { handleSignOut, authState } = useAuth();
   return (
     <header className="left-0 w-full z-40 ">
       {/* Backdrop with blur effect */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/80 backdrop-blur-[30px]"
         style={{
-          maskImage: 'linear-gradient(to bottom, rgb(0, 0, 0) 50%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0) 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, rgb(0, 0, 0) 50%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0) 100%)'
+          maskImage:
+            "linear-gradient(to bottom, rgb(0, 0, 0) 50%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0) 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgb(0, 0, 0) 50%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0) 100%)",
         }}
       ></div>
 
@@ -51,26 +55,38 @@ function Header() {
                 {item}
               </a>
             ))}
-            <a className="bg-[#ffcc3f] text-[#745982] px-4 py-2 rounded-full hover:bg-[#db2a59] hover:text-white transition duration-300" href="#contact">
-              Book Now
-            </a>
+            {authState.currentUser ? (
+              <>{authState.currentUser}</>
+            ) : (
+              <Link
+                className="bg-[#ffcc3f] text-[#db2a59] px-4 py-2 rounded-full hover:bg-[#db2a59] hover:text-white transition duration-300"
+                to="/signup"
+              >
+                Sign Up
+              </Link>
+            )}
+            <LogOut className="h-5 w-5" onClick={handleSignOut} />
+            {/* {currentUser && <h1>Welcome</h1>} */}
           </nav>
 
           {/* Navigation for small screens */}
           {isMenuOpen && (
             <div className="absolute top-16 left-0 right-0 bg-white z-50 md:hidden">
               <nav className="flex flex-col items-center py-4">
-                {["Services", "Testimonials", "About", "Contact"].map((item) => (
-                  <a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className="text-[#707070] hover:text-[#745982] py-2 transition duration-300"
-                    onClick={toggleMenu}
-                  >
-                    {item}
-                  </a>
-                ))}
+                {["Services", "Testimonials", "About", "Contact"].map(
+                  (item) => (
+                    <a
+                      key={item}
+                      href={`#${item.toLowerCase()}`}
+                      className="text-[#707070] hover:text-[#745982] py-2 transition duration-300"
+                      onClick={toggleMenu}
+                    >
+                      {item}
+                    </a>
+                  )
+                )}
               </nav>
+              {/* <LogOut className="h-5 w-5" onClick={signOut} /> */}
             </div>
           )}
         </header>

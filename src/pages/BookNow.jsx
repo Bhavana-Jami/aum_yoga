@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const BookNowPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    class: '',
-    date: '',
-    time: ''
+    name: "",
+    email: "",
+    phone: "",
+    class: "",
+    date: "",
+    time: "",
   });
 
   const handleChange = (e) => {
@@ -17,35 +17,38 @@ const BookNowPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    // Reset form or show confirmation message
+    console.log("Form submitted:", formData);
   };
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.6 },
   };
 
   return (
     <div className="bg-[#f9f7fc] min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-2xl">
-        <motion.h1 
+        <motion.h1
           className="text-4xl font-bold text-[#745982] mb-8 text-center"
           {...fadeIn}
         >
           Book Your Yoga Class
         </motion.h1>
 
-        <motion.form 
-          onSubmit={handleSubmit} 
+        <motion.form
+          onSubmit={handleSubmit}
           className="bg-white p-8 rounded-lg shadow-md"
           {...fadeIn}
           transition={{ delay: 0.2 }}
         >
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name</label>
+            <label
+              htmlFor="name"
+              className="block text-gray-700 font-semibold mb-2"
+            >
+              Name
+            </label>
             <input
               type="text"
               id="name"
@@ -58,7 +61,12 @@ const BookNowPage = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">Email</label>
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-semibold mb-2"
+            >
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -71,7 +79,12 @@ const BookNowPage = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">Phone</label>
+            <label
+              htmlFor="phone"
+              className="block text-gray-700 font-semibold mb-2"
+            >
+              Phone
+            </label>
             <input
               type="tel"
               id="phone"
@@ -83,7 +96,12 @@ const BookNowPage = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="class" className="block text-gray-700 font-semibold mb-2">Class</label>
+            <label
+              htmlFor="class"
+              className="block text-gray-700 font-semibold mb-2"
+            >
+              Class
+            </label>
             <select
               id="class"
               name="class"
@@ -103,7 +121,12 @@ const BookNowPage = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="date" className="block text-gray-700 font-semibold mb-2">Date</label>
+            <label
+              htmlFor="date"
+              className="block text-gray-700 font-semibold mb-2"
+            >
+              Date
+            </label>
             <input
               type="date"
               id="date"
@@ -116,16 +139,54 @@ const BookNowPage = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="time" className="block text-gray-700 font-semibold mb-2">Time</label>
-            <input
-              type="time"
-              id="time"
-              name="time"
-              value={formData.time}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#745982]"
-            />
+            <label className="block text-gray-700 font-semibold mb-2">Pick a Time Slot</label>
+            <div className="flex gap-2">
+              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
+                formData.time === "06:00" 
+                  ? "bg-[#745982] text-white" 
+                  : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
+              }`}>
+                <input
+                  type="radio"
+                  name="time"
+                  value="06:00"
+                  checked={formData.time === "06:00"}
+                  onChange={handleChange}
+                  className="appearance-none hidden"
+                />
+                6:00 AM
+              </label>
+              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
+                formData.time === "07:00" 
+                  ? "bg-[#745982] text-white" 
+                  : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
+              }`}>
+                <input
+                  type="radio"
+                  name="time"
+                  value="07:00"
+                  checked={formData.time === "07:00"}
+                  onChange={handleChange}
+                  className="appearance-none hidden"
+                />
+                7:00 AM
+              </label>
+              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
+                formData.time === "18:00" 
+                  ? "bg-[#745982] text-white" 
+                  : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
+              }`}>
+                <input
+                  type="radio"
+                  name="time"
+                  value="18:00"
+                  checked={formData.time === "18:00"}
+                  onChange={handleChange}
+                  className="appearance-none hidden"
+                />
+                6:00 PM
+              </label>
+            </div>
           </div>
 
           <motion.button
