@@ -15,9 +15,51 @@ const BookNowPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      // Create order on backend
+      const response = await fetch("https://razorpay-payment-intergration-service.onrender.com/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: 500 }),
+      });
+
+      const order = await response.json();
+
+      const options = {
+        key: import.meta.env.RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency,
+        name: "Bluewonk",
+        description: "Bluewonk Org",
+        order_id: order.id,
+        handler: async (response) => {
+          console.log("hiyaaaa", response)
+          const verifyPaymenetResponse = await fetch("https://razorpay-payment-intergration-service.onrender.com/verify-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            }),
+          });
+          alert(verifyPaymenetResponse.json());
+        },
+        prefill: {
+          name: "John Doe",
+          email: "john@example.com",
+          contact: "9999999999",
+        },
+        theme: { color: "#3399cc" },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      alert("Error creating order: " + err.message);
+    }
   };
 
   const fadeIn = {
@@ -141,11 +183,10 @@ const BookNowPage = () => {
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Pick a Time Slot</label>
             <div className="flex gap-2">
-              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
-                formData.time === "06:00" 
-                  ? "bg-[#745982] text-white" 
-                  : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
-              }`}>
+              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${formData.time === "06:00"
+                ? "bg-[#745982] text-white"
+                : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
+                }`}>
                 <input
                   type="radio"
                   name="time"
@@ -156,11 +197,10 @@ const BookNowPage = () => {
                 />
                 6:00 AM
               </label>
-              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
-                formData.time === "07:00" 
-                  ? "bg-[#745982] text-white" 
-                  : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
-              }`}>
+              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${formData.time === "07:00"
+                ? "bg-[#745982] text-white"
+                : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
+                }`}>
                 <input
                   type="radio"
                   name="time"
@@ -171,11 +211,10 @@ const BookNowPage = () => {
                 />
                 7:00 AM
               </label>
-              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${
-                formData.time === "18:00" 
-                  ? "bg-[#745982] text-white" 
-                  : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
-              }`}>
+              <label className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-300 ${formData.time === "18:00"
+                ? "bg-[#745982] text-white"
+                : "bg-[#f9f7fc] hover:bg-[#745982] hover:text-white"
+                }`}>
                 <input
                   type="radio"
                   name="time"
