@@ -1,7 +1,7 @@
 import { useContext, useReducer } from "react";
 import { AuthContext } from "./authContext";
 
-import {useAuthentication} from "../customHooks/useAuthentication";
+import { useAuthentication } from "../customHooks/useAuthentication";
 
 
 const initialState = {
@@ -42,6 +42,24 @@ const authReducer = (state, action) => {
         loading: false,
       };
     case "EMAIL_SIGNUP_FAILURE":
+      return {
+        currentUser: null,
+        error: action.payload,
+        loading: false,
+      };
+    case "EMAIL_SIGNOUT_START":
+      return {
+        currentUser: null,
+        error: action.payload,
+        loading: true,
+      };
+    case "EMAIL_SIGNOUT_SUCCESS":
+      return {
+        currentUser: null,
+        error: action.payload,
+        loading: false,
+      };
+    case "EMAIL_SIGNOUT_FAILURE":
       return {
         currentUser: null,
         error: action.payload,

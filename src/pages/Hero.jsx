@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
+import { useAuth } from "../context/authContext";
 import Header from "./Header";
 import heroBackground from "../assets/hero-background.png";
 import LazyImage from "../components/LazyImage";
-import { useAuth } from "../context/authContext";
+import Loading from "../components/Loading";
 
 function Hero() {
-  const { authState } = useAuth();
+  const authState = { loading: false }
   return (
     <>
       {authState.loading ? (
-        <>Loading</>
+        <Loading />
       ) : (
         <section className="bg-[#745982] text-white  relative overflow-hidden h-[100vh] sm:px-5 ">
           <Header />

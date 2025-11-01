@@ -1,26 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../context/authContext";
 import { validation } from "../utils/validation";
 const SignInPage = () => {
+  const navigate = useNavigate();
+  const { handleEmailSignIn, authState } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleValidation = validation;
-
-  const { handleEmailSignIn, authState } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    handleValidation(email, password);
-    handleEmailSignIn(email, password);
+
+    const validationErrors = validation(
+      formData.email,
+      formData.password,
+      formData.confirmPassword
+    );
+    if (validationErrors.email || validationErrors.password || validationErrors.confirmPassword) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    await handleValidation(email, password);
+    if (authState.error === "Firebase: Error (auth/invalid-email).") {
+      alert("Invalid credentials, please try again!", authState.error);
+      navigate("/signin");
+      return;
+    } else if (authState.error) {
+      alert("Something went wrong while singing up, please try again later", authState.error);
+      navigate("/");
+      return;
+    }
+    else {
+      alert("Signedin successfully, redirecting to home page!");
+      navigate("/");
+    }
   };
 
   return (
+
     <div className="min-h-screen bg-[#f9f7fc] flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}

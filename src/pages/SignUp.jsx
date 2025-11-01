@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { validation } from "../utils/validation";
 import InputField from "../components/InputField";
+import Loading from "../components/Loading";
 
 const SignUpPage = () => {
+  const { handleEmailSignUp, authState } = useAuth();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,24 +17,44 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const { handleEmailSignUp } = useAuth();
   const navigate = useNavigate();
-
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
+
     const validationErrors = validation(
       formData.email,
       formData.password,
       formData.confirmPassword
     );
 
-    if (Object.keys(validationErrors).length) {
+    if (validationErrors.email || validationErrors.password || validationErrors.confirmPassword) {
       setErrors(validationErrors);
       return;
     }
+
     setErrors({});
-    handleEmailSignUp(formData.email, formData.password);
+    await handleEmailSignUp(formData.email, formData.password);
+    console.log("Auth State after sign up:", authState.error);
+    if (authState.error === "Firebase: Error (auth/email-already-in-use).") {
+      alert("Email already in use. Please sign in instead.");
+      navigate("/signin");
+      return;
+    }
+    else if (authState.error === "Firebase: Error (auth/invalid-email).") {
+      alert("Invalid credentials, please try again!", authState.error);
+      navigate("/");
+      return;
+    } else if (authState.error) {
+      alert("Something went wrong while singing up, please try again later", authState.error);
+      navigate("/");
+      return;
+    }
+    else {
+      alert("Signed up successfully, please sign in to proceed!");
+      navigate("/signin");
+    }
   };
+
 
   const inputs = [
     {
@@ -69,7 +92,7 @@ const SignUpPage = () => {
       showState: showConfirmPassword,
     },
   ];
-
+  if (authState.loading) return <Loading />
   return (
     <div className="min-h-screen bg-[#f9f7fc] flex items-center justify-center px-4">
       <motion.div
@@ -81,7 +104,7 @@ const SignUpPage = () => {
         <h2 className="text-3xl font-bold text-[#745982] mb-6 text-center">
           Join Aum Yoga
         </h2>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={(e) => handleSignUp(e)}>
           {inputs.map((input) => (
             <InputField key={input.id} {...input} />
           ))}

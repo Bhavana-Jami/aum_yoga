@@ -1,14 +1,18 @@
 import React, { useState, useContext } from "react";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, User } from "lucide-react";
 import { useAuth } from "../context/authContext";
 import { Link } from "react-router-dom";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const handleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  }
   const { handleSignOut, authState } = useAuth();
   return (
     <header className="left-0 w-full z-40 ">
@@ -56,7 +60,55 @@ function Header() {
               </a>
             ))}
             {authState.currentUser ? (
-              <>{authState.currentUser}</>
+              // <>{JSON.stringify(authState.currentUser.displayName) || User}</>
+              <>
+                <div className="relative">
+                  {/* Trigger */}
+                  <button
+                    onClick={handleUserMenu}
+                    className="flex items-center justify-center"
+                  >
+                    {showUserMenu ? (
+                      <X
+                        size={28}
+                        className="h-9 w-9 text-[#db2a59] bg-[#ffcc3f] rounded-full p-2 shadow-md hover:scale-105 transition"
+                      />
+                    ) : authState.currentUser?.photoURL ? (
+                      <img
+                        src={authState.currentUser.photoURL}
+                        alt="Profile"
+                        className="w-9 h-9 rounded-full object-cover border-2 border-[#ffcc3f] shadow-sm hover:scale-105 transition"
+                      />
+                    ) : (
+                      <User
+                        className="h-9 w-9 text-[#db2a59] bg-[#ffcc3f] rounded-full p-2 shadow-md hover:scale-105 transition"
+                      />
+                    )}
+                  </button>
+
+                  {/* Dropdown */}
+                  <div
+                    className={`absolute right-0 mt-3 w-48 rounded-xl bg-black text-white ring-1 ring-[#ffcc3f] ring-opacity-60 shadow-lg transform transition-all duration-200 ${showUserMenu ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                      }`}
+                  >
+                    <div className="flex flex-col p-3 space-y-3">
+                      <Link
+                        to="/user_profile"
+                        className="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#ffcc3f] hover:text-black transition"
+                      >
+                        Profile
+                      </Link>
+                      <button
+                        onClick={handleSignOut}
+                        className="px-3 py-2 rounded-md text-sm font-medium text-left hover:bg-[#db2a59] hover:text-white transition"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+
             ) : (
               <Link
                 className="bg-[#ffcc3f] text-[#db2a59] px-4 py-2 rounded-full hover:bg-[#db2a59] hover:text-white transition duration-300"
@@ -65,8 +117,6 @@ function Header() {
                 Sign Up
               </Link>
             )}
-            <LogOut className="h-5 w-5" onClick={handleSignOut} />
-            {/* {currentUser && <h1>Welcome</h1>} */}
           </nav>
 
           {/* Navigation for small screens */}
@@ -86,7 +136,7 @@ function Header() {
                   )
                 )}
               </nav>
-              {/* <LogOut className="h-5 w-5" onClick={signOut} /> */}
+              <LogOut className="h-5 w-5" onClick={signOut} />
             </div>
           )}
         </header>

@@ -19,11 +19,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-async function login(email, password) {
-  await setPersistence(auth, browserLocalPersistence); // persists after refresh
-  return signInWithEmailAndPassword(auth, email, password);
-}
+// async function login(email, password) {
+//   await setPersistence(auth, browserLocalPersistence); // persists after refresh
+//   return signInWithEmailAndPassword(auth, email, password);
+// }
 
-
+// login()
 
 export default app;
